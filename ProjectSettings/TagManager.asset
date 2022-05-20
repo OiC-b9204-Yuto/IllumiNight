@@ -12,12 +12,12 @@ TagManager:
   - 
   - Water
   - UI
+  - Player
+  - Minion
+  - Enemy
+  - Stage
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Bullet
   - 
   - 
   - 
