@@ -20,6 +20,7 @@ public class PlayerMove : MonoBehaviour
         float inputH = Input.GetAxisRaw("Horizontal");
         Move(new Vector3(inputH, 0, inputV));
         // 回転
+        //エディタでの実行時、マウス移動の中心点が右上になってる
 
         ;
         Vector3 inputMousePos = Input.mousePosition;
