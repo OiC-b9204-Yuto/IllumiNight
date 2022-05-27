@@ -475,6 +475,7 @@ GameObject:
   - component: {fileID: 933095559}
   - component: {fileID: 933095558}
   - component: {fileID: 933095562}
+  - component: {fileID: 933095563}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -575,6 +576,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+--- !u!114 &933095563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933095557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78838314d30ac5645910f89221b3831c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _light: {fileID: 1668664517}
+  _minion: {fileID: 1938911936}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1405,7 +1420,7 @@ GameObject:
   - component: {fileID: 1938911932}
   - component: {fileID: 1938911931}
   - component: {fileID: 1938911935}
-  - component: {fileID: 1938911934}
+  - component: {fileID: 1938911936}
   m_Layer: 0
   m_Name: Minion
   m_TagString: Untagged
@@ -1491,19 +1506,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1938911929}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1938911934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1938911929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b65222c92c4e844eb74a9b1f863973d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 3
 --- !u!54 &1938911935
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1520,3 +1522,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1938911936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938911929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9edb48a57ffb8a54589f479215b26d26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementSpeed: 3
+  _isBattleRx:
+    value: 0
