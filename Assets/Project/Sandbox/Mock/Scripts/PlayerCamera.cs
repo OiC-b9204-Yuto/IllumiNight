@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour
 {
     [SerializeField] Transform player;
-    Vector3 distance;
+    [SerializeField] Vector3 distance;
     // Start is called before the first frame update
     void Start()
     {
