@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 public class Minion : MonoBehaviour
 {
     [SerializeField] private float _movementSpeed;
     private Vector3 _direction;
-    private bool _isButtle;
+    //テストが終わればSerializeFieldは消すこと
+    [SerializeField]private BoolReactiveProperty _isBattleRx;
+    public IReadOnlyReactiveProperty<bool> IsBattleRx => _isBattleRx;
+
 
     void Update()
     {
-        if (!_isButtle) { Move(); }
+        if (!IsBattleRx.Value) { Move(); }
     }
 
     private void Move()
@@ -20,7 +24,7 @@ public class Minion : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (_isButtle) { return; }
+        if (IsBattleRx.Value) { return; }
 
         if(other.gameObject.tag == "Enemy")
         {
@@ -49,7 +53,7 @@ public class Minion : MonoBehaviour
         //戦闘 -> 時間計測のみ？
         //戦闘開始/終了 -> EventでLightに送る
         //結果を該当エネミーに送る
-        _isButtle = true;
+        _isBattleRx.Value = true;
     }
 
     private void OnTriggerExit(Collider other)
