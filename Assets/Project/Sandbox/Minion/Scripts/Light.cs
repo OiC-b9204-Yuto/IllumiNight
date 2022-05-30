@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,8 +9,8 @@ public class Light : MonoBehaviour
     [SerializeField] private GameObject _light;
     [SerializeField] private Minion _minion;
 
-    //�C�x���g���쐬-> �~�j�I���̐퓬�J�n/�I��
-    //��L�C�x���g���Ŏ��g�̃I���I�t��ύX
+    //イベントを作成-> ミニオンの戦闘開始/終了
+    //上記イベント内で自身のオンオフを変更
 
     private void Start()
     {

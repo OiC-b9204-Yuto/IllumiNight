@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
@@ -6,20 +6,30 @@ using UniRx;
 public class Minion : MonoBehaviour
 {
     [SerializeField] private float _movementSpeed;
+    //ä»¶ã®è¨ä¼æ™‚é–“ã‚’æ”»æ’ƒåŠ›ä¾å­˜ã«ã™ã‚‹å ´åˆã®ã‚‚ã®
+    [SerializeField] private int _attackPoint;
     private Vector3 _direction;
-    //ƒeƒXƒg‚ªI‚í‚ê‚ÎSerializeField‚ÍÁ‚·‚±‚Æ
+    //ãƒ†ã‚¹ãƒˆãŒçµ‚ã‚ã‚Œã°SerializeFieldã¯æ¶ˆã™ã“ã¨
     [SerializeField]private BoolReactiveProperty _isBattleRx;
     public IReadOnlyReactiveProperty<bool> IsBattleRx => _isBattleRx;
 
+    private float _timer = 0;
 
     void Update()
     {
         if (!IsBattleRx.Value) { Move(); }
+        else { CountTimer(); }
     }
 
     private void Move()
     {
        transform.position += _direction * _movementSpeed * Time.deltaTime; 
+    }
+
+    private void CountTimer()
+    {
+        _timer -= Time.deltaTime * _attackPoint;
+        if(_timer <= 0) { BattleEnd(); }
     }
 
     private void OnTriggerStay(Collider other)
@@ -49,11 +59,16 @@ public class Minion : MonoBehaviour
     }
     private void TriggerEnemy(Collider collider)
     {
-        //“Gî•ñæ“¾ -> I—¹Œ‹‰Ê‚ğ“n‚·‚½‚ß(BaseEnemy)
-        //í“¬ -> ŠÔŒv‘ª‚Ì‚İH
-        //í“¬ŠJn/I—¹ -> Event‚ÅLight‚É‘—‚é
-        //Œ‹‰Ê‚ğŠY“–ƒGƒlƒ~[‚É‘—‚é
+        //æ•µæƒ…å ±å–å¾— -> çµ‚äº†æ™‚çµæœã‚’æ¸¡ã™ãŸã‚(BaseEnemy)
+        //æˆ¦é—˜ -> æ™‚é–“è¨ˆæ¸¬ã®ã¿ï¼Ÿ _timerã«æˆ¦é—˜æ™‚é–“ã‚’
+        //æˆ¦é—˜é–‹å§‹/çµ‚äº† -> Eventã§Lightã«é€ã‚‹
         _isBattleRx.Value = true;
+    }
+
+    private void BattleEnd()
+    {
+        _isBattleRx.Value = false;
+        //æ•µã«æˆ¦é—˜çµ‚äº†ã‚’é€ã‚‹
     }
 
     private void OnTriggerExit(Collider other)
