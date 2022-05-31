@@ -3,43 +3,54 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 
-// 敵のベースクラス（作成中：竹中）
-//  移動と攻撃を変更できるようにコードを書く
-//  Reactiveに頼りすぎない（コードが追いづらくなるのを防ぐ）
-
+/// <summary>
+/// 敵のベースクラス 作成者：竹中
+/// </summary>
 public class BaseEnemy : MonoBehaviour
 {
     [SerializeField] protected int _initLifePoint;
 
-    // 現在のライフポイント
     [SerializeField] protected IntReactiveProperty _currentLifePoint;
+    /// <summary>
+    /// 現在のライフポイント
+    /// </summary>
     public IReadOnlyReactiveProperty<int> CurrentLifePoint => _currentLifePoint;
 
-    // ダメージを受けるまでに必要な戦闘時間
     [SerializeField] protected float _requiredBattleTime;
+    /// <summary>
+    /// ダメージを受けるまでに必要な戦闘時間
+    /// </summary>
     public float RequiredBattleTime => _requiredBattleTime;
 
-    // 死亡用フラグ
+  
     [SerializeField] protected BoolReactiveProperty _isDead;
+    /// <summary>
+    /// 死亡用フラグ
+    /// </summary>  
     public IReadOnlyReactiveProperty<bool> IsDead => _isDead;
 
-
-
-    protected void Initialize()
+    /// <summary>
+    /// 初期化用関数<br/>
+    /// フィールドの初期化などを行っている
+    /// </summary>
+    protected virtual void Initialize()
     {
         _currentLifePoint = new IntReactiveProperty(_initLifePoint);
         _isDead = new BoolReactiveProperty(false);
         CurrentLifePoint.Where(_ => _ <= 0).Subscribe(_ => _isDead.Value = true); 
     }
 
-    void Start()
+    /// <summary>
+    /// ダメージを与える関数<br/>
+    /// ※戦闘時間の計測はミニオン側で行う
+    /// </summary>
+    public void TakeDamage()
     {
-        Initialize();
+        _currentLifePoint--;
     }
 
-
-    void Update()
+    protected virtual void Awake()
     {
-        
+        Initialize();
     }
 }
