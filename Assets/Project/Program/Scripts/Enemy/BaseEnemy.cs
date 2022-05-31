@@ -46,7 +46,7 @@ public class BaseEnemy : MonoBehaviour
     /// </summary>
     public void TakeDamage()
     {
-        _currentLifePoint--;
+        _currentLifePoint.Value--;
     }
 
     protected virtual void Awake()
