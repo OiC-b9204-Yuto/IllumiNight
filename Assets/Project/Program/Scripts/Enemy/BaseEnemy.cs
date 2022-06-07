@@ -29,6 +29,12 @@ public class BaseEnemy : MonoBehaviour
     /// </summary>  
     public IReadOnlyReactiveProperty<bool> IsDead => _isDead;
 
+    protected Vector3 _initPosition;
+    /// <summary>
+    /// 初期座標
+    /// </summary>
+    public Vector3 InitPosition => _initPosition;
+
     /// <summary>
     /// 初期化用関数<br/>
     /// フィールドの初期化などを行っている
@@ -37,7 +43,8 @@ public class BaseEnemy : MonoBehaviour
     {
         _currentLifePoint = new IntReactiveProperty(_initLifePoint);
         _isDead = new BoolReactiveProperty(false);
-        CurrentLifePoint.Where(_ => _ <= 0).Subscribe(_ => _isDead.Value = true); 
+        CurrentLifePoint.Where(_ => _ <= 0).Subscribe(_ => _isDead.Value = true);
+        _initPosition = transform.position;
     }
 
     /// <summary>

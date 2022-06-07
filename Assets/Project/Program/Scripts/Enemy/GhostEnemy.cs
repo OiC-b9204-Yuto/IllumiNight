@@ -1,27 +1,26 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using UnityEditor;
 
 public class GhostEnemy : BaseEnemy
 {
     [SerializeField] private float _moveSpeed;
 
-    // ˆÚ“®‚ÍÀ•Ww’è
-    [SerializeField] List<MoveData> _moveData;
+
+    [SerializeField] float _moveAreaRadius;
+
     int _movePointIndex = 0;
     bool moveNext = false;
     void Start()
     {
-        // €–S
+        // æ­»äº¡æ™‚
         IsDead.Subscribe(_ => {
-            if (_) { Debug.Log("€–S‚µ‚Ü‚µ‚½"); } 
+            if (_) { Debug.Log("æ­»äº¡ã—ã¾ã—ãŸ"); } 
         });
-
-        if (_moveData.Count <= 0) { return; }
-        MoveTimer(_moveData[_movePointIndex].time, this.GetCancellationTokenOnDestroy()).Forget();
     }
 
     void Update()
@@ -29,33 +28,9 @@ public class GhostEnemy : BaseEnemy
         MoveUpdate();
     }
 
-    async UniTask MoveTimer(float time, CancellationToken cancellationToken)
-    {
-        await UniTask.Delay((int)(time * 1000));
-        moveNext = true;
-    }
-
     void MoveUpdate()
     {
-        if (_moveData.Count <= 0) { return; }
-
-        transform.position += _moveSpeed * Time.deltaTime * _moveData[_movePointIndex].dir.normalized;
-
-        if (moveNext)
-        {
-            _movePointIndex++;
-            if (_moveData.Count <= _movePointIndex)
-            {
-                _movePointIndex -= _moveData.Count;
-            }
-            MoveTimer(_moveData[_movePointIndex].time, this.GetCancellationTokenOnDestroy()).Forget();
-            moveNext = false;
-        }
-    }
-
-    void MovePointCheck()
-    {
-        
+        // å††å½¢ã®ç§»å‹•ç¯„å›²å†…ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«ç§»å‹•ã™ã‚‹
     }
 
     void AttackUpdate()
@@ -63,23 +38,20 @@ public class GhostEnemy : BaseEnemy
         
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
-        Vector3 pos = transform.position;
-        for (int i = 0; i < _moveData.Count; i++)
+        //ç§»å‹•ç¯„å›²å††ã®æç”»
+        Handles.color = Color.yellow;
+        if (!EditorApplication.isPlaying)
         {
-            Gizmos.color = Color.blue;
-            Vector3 nextpos = pos + _moveData[i].time * _moveSpeed * _moveData[i].dir.normalized;
-            Gizmos.DrawLine(pos, nextpos);
-            pos = nextpos;
+            Handles.DrawWireDisc(transform.position, Vector3.up, _moveAreaRadius);
+        }
+        else
+        {
+            Handles.DrawWireDisc(_initPosition, Vector3.up, _moveAreaRadius);
         }
     }
-}
-
-[System.Serializable]
-public class MoveData
-{
-    public Vector3 dir;
-    public float time;
+#endif
 }
 
