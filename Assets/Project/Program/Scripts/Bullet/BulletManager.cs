@@ -5,16 +5,52 @@ using UnityEngine.Pool;
 
 public class BulletManager : MonoBehaviour
 {
-    ObjectPool<Bullet> pool;
+    [SerializeField] Bullet _bulletPrefab;
 
-    void Start()
+    ObjectPool<Bullet> _bulletPool;
+    public IObjectPool<Bullet> BulletPool => _bulletPool;
+    public static BulletManager _instance;
+    public static BulletManager Instance => _instance;
+
+
+    void Awake()
     {
+        _instance = this;
 
+        _bulletPool = new ObjectPool<Bullet>(
+            OnCreateBullet,
+            OnGetBullet,
+            OnReleaseBullet,
+            OnDestroyBullet,
+            true,
+            100,
+            100
+            );
     }
 
-    // Update is called once per frame
-    void Update()
+    Bullet OnCreateBullet()
     {
-        
+        Bullet bullet = Instantiate(_bulletPrefab);
+        return bullet;
+    }
+
+    void OnGetBullet(Bullet bullet)
+    {
+        bullet.gameObject.SetActive(true);
+    }
+
+    void OnReleaseBullet(Bullet bullet)
+    {
+        bullet.gameObject.SetActive(false   );
+    }
+
+    void OnDestroyBullet(Bullet bullet)
+    {
+        Destroy(bullet.gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        _instance = null;
     }
 }

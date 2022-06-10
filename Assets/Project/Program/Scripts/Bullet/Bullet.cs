@@ -6,13 +6,13 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     Rigidbody _rigidbody;
-    float _speed;
+    [SerializeField]float _speed;
     void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    void Setup(Vector3 pos, Vector3 dir, float speed)
+    public void Setup(Vector3 pos, Vector3 dir, float speed)
     {
         transform.position = pos;
         transform.rotation = Quaternion.LookRotation(dir);
@@ -30,11 +30,11 @@ public class Bullet : MonoBehaviour
         {
             // var player = GetComponent<Player>(); 
             // player.TakeDamage();
-            gameObject.SetActive(false);
+            BulletManager.Instance.BulletPool.Release(this);
         }
-        else if (other.tag == "Stage")
+        else if (other.gameObject.layer == LayerMask.NameToLayer("Stage"))
         {
-            gameObject.SetActive(false);
+            BulletManager.Instance.BulletPool.Release(this);
         }
     }
 }
