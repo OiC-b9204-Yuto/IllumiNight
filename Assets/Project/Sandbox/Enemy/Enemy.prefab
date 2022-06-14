@@ -130,7 +130,7 @@ MonoBehaviour:
   _initLifePoint: 1
   _currentLifePoint:
     value: 0
-  _requiredBattleTime: 0
+  _requiredBattleTime: 5
   _isDead:
     value: 0
   _moveSpeed: 150

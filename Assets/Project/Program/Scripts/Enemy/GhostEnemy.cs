@@ -133,6 +133,8 @@ public class GhostEnemy : BaseEnemy
     public override void BattleStart()
     {
         _isCanMove = false;
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.isKinematic = true;
     }
 
 #if UNITY_EDITOR

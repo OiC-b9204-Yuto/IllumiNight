@@ -13,17 +13,23 @@ public class Minion : MonoBehaviour
     [SerializeField]private BoolReactiveProperty _isBattleRx;
     public IReadOnlyReactiveProperty<bool> IsBattleRx => _isBattleRx;
 
+    private BaseEnemy _tmpEnemyData = null;
+
     private float _timer = 0;
 
     void Update()
     {
         if (!IsBattleRx.Value) { Move(); }
-        else { CountTimer(); }
+        else 
+        { 
+            CountTimer(); 
+        }
     }
 
     private void Move()
     {
-       transform.position += _direction * _movementSpeed * Time.deltaTime; 
+        //transform.position += _direction * _movementSpeed * Time.deltaTime;
+        this.GetComponent<Rigidbody>().velocity = _direction * _movementSpeed;
     }
 
     private void CountTimer()
@@ -32,21 +38,30 @@ public class Minion : MonoBehaviour
         if(_timer <= 0) { BattleEnd(); }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
         if (IsBattleRx.Value) { return; }
 
-        if(other.gameObject.tag == "Enemy")
+        if(other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            TriggerEnemy(other);
-        }
-        else if (other.gameObject.tag == "Light")
-        {
-            TriggerLight(other);
+            CollisionEnemy(other);
         }
     }
 
-    private void TriggerLight(Collider collider)
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Minion"))
+        {
+            return;
+        }
+        if (other.gameObject.layer == LayerMask.NameToLayer("Light"))
+        {
+            TriggeLight(other);
+        }
+    }
+
+
+    private void TriggeLight(Collider collider)
     {
         Vector3 dir = transform.position - collider.transform.position;
         dir.y = 0;
@@ -57,10 +72,23 @@ public class Minion : MonoBehaviour
         }
         _direction = dir;
     }
-    private void TriggerEnemy(Collider collider)
+    private void CollisionEnemy(Collision collision)
     {
         //敵情報取得 -> 終了時結果を渡すため(BaseEnemy)
+        _tmpEnemyData = collision.gameObject.GetComponent<BaseEnemy>();
+
+        if(_tmpEnemyData.IsDead.Value)
+        {
+            return;
+        }
+
+        //戦闘開始につきdirectionを0に
+        _direction = Vector3.zero;
+        //動きを停止
+        this.gameObject.GetComponent<Rigidbody>().isKinematic = true;      
         //戦闘 -> 時間計測のみ？ _timerに戦闘時間を
+        _tmpEnemyData.BattleStart();
+        _timer = _tmpEnemyData.RequiredBattleTime;
         //戦闘開始/終了 -> EventでLightに送る
         _isBattleRx.Value = true;
     }
@@ -68,14 +96,18 @@ public class Minion : MonoBehaviour
     private void BattleEnd()
     {
         _isBattleRx.Value = false;
+        //動きを再開
+        this.gameObject.GetComponent<Rigidbody>().isKinematic = false;
         //敵に戦闘終了を送る
+        _tmpEnemyData.TakeDamage();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Light")
+        if (other.gameObject.layer == LayerMask.NameToLayer("Light"))
         {
             _direction = Vector3.zero;
+
         }
     }
 }
