@@ -6,7 +6,7 @@ using UniRx;
 /// <summary>
 /// 敵のベースクラス 作成者：竹中
 /// </summary>
-public class BaseEnemy : MonoBehaviour
+public abstract class BaseEnemy : MonoBehaviour
 {
     [SerializeField] protected int _initLifePoint;
 
@@ -55,6 +55,8 @@ public class BaseEnemy : MonoBehaviour
     {
         _currentLifePoint.Value--;
     }
+
+    public abstract void BattleStart();
 
     protected virtual void Awake()
     {

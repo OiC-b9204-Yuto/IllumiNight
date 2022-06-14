@@ -30,6 +30,8 @@ public class GhostEnemy : BaseEnemy
     [SerializeField] float _ShotCoolTime = 3.0f;
     [SerializeField] float _bulletSpeed = 100;
 
+    bool _isCanMove = true;
+
     protected override void Awake()
     {
         base.Awake();
@@ -65,7 +67,7 @@ public class GhostEnemy : BaseEnemy
     void FixedUpdate()
     {
         if (IsDead.Value) { return; }
-        if (_moveSpeed > 0)
+        if (_isCanMove && _moveSpeed > 0)
         {
             MoveUpdate();
         }
@@ -112,7 +114,9 @@ public class GhostEnemy : BaseEnemy
         _isShotReady = false;
         Bullet bullet = BulletManager.Instance.BulletPool.Get();
         Vector3 bulletPos = transform.position + transform.forward * _collisionRadius;
-        Vector3 targetPlayerDir = (_player.position - bulletPos).normalized;
+        Vector3 targetPlayerDir = _player.position - bulletPos;
+        targetPlayerDir.y = 0;
+        targetPlayerDir.Normalize();
         bullet.Setup(bulletPos, targetPlayerDir, _bulletSpeed);
         ShotReadyWait().Forget();
     }
@@ -125,6 +129,10 @@ public class GhostEnemy : BaseEnemy
     {
         await UniTask.Delay((int)(_ShotCoolTime * 1000));
         _isShotReady = true;
+    }
+    public override void BattleStart()
+    {
+        _isCanMove = false;
     }
 
 #if UNITY_EDITOR
