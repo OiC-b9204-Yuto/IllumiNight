@@ -11,6 +11,7 @@ public class Minion : MonoBehaviour
     private Vector3 _direction;
     //テストが終わればSerializeFieldは消すこと
     [SerializeField]private BoolReactiveProperty _isBattleRx;
+    [SerializeField] private float _collisionRadius;
     public IReadOnlyReactiveProperty<bool> IsBattleRx => _isBattleRx;
 
     private BaseEnemy _tmpEnemyData = null;
@@ -19,17 +20,42 @@ public class Minion : MonoBehaviour
 
     void Update()
     {
-        if (!IsBattleRx.Value) { Move(); }
-        else 
-        { 
-            CountTimer(); 
+        if (IsBattleRx.Value) 
+        {
+            CountTimer();
+        }
+        else
+        {
+            CheckCollider();
         }
     }
 
-    private void Move()
+    private void CheckCollider()
+    {
+        bool isInLight = false;
+        Collider[] colliders = Physics.OverlapSphere(this.transform.position, _collisionRadius);
+        foreach (var item in colliders)
+        {
+            if(item.gameObject.layer == LayerMask.NameToLayer("Light"))
+            {
+                InLight(item);
+                isInLight = true;
+            }
+        }
+        IsMove(isInLight);
+    }
+
+    private void IsMove(bool isInLight)
     {
         //transform.position += _direction * _movementSpeed * Time.deltaTime;
-        this.GetComponent<Rigidbody>().velocity = _direction * _movementSpeed;
+        if(isInLight)
+        {
+            this.GetComponent<Rigidbody>().velocity = transform.forward * _movementSpeed;
+        }
+        else
+        {
+            this.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+        }
     }
 
     private void CountTimer()
@@ -48,20 +74,7 @@ public class Minion : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Minion"))
-        {
-            return;
-        }
-        if (other.gameObject.layer == LayerMask.NameToLayer("Light"))
-        {
-            TriggeLight(other);
-        }
-    }
-
-
-    private void TriggeLight(Collider collider)
+    private void InLight(Collider collider)
     {
         Vector3 dir = transform.position - collider.transform.position;
         dir.y = 0;
@@ -70,7 +83,7 @@ public class Minion : MonoBehaviour
         {
             dir.z = 1;
         }
-        _direction = dir;
+        this.transform.LookAt(this.transform.position + dir);
     }
     private void CollisionEnemy(Collision collision)
     {
@@ -101,13 +114,11 @@ public class Minion : MonoBehaviour
         //敵に戦闘終了を送る
         _tmpEnemyData.TakeDamage();
     }
-
-    private void OnTriggerExit(Collider other)
+    #if UNITY_EDITOR
+    void OnDrawGizmosSelected()
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Light"))
-        {
-            _direction = Vector3.zero;
-
-        }
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(this.transform.position, _collisionRadius);
     }
+    #endif
 }
