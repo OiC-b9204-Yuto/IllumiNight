@@ -2,47 +2,57 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Base_GameSystem : MonoBehaviour
+public class BaseGameSystem : MonoBehaviour
 {
-    [SerializeField] Vector3[] EnemySpawnPosition;       //敵のスポーン位置
-    [SerializeField] int EnemyCount;                     //敵の数
-    [SerializeField] int CurrentPhase;                   //現在のフェーズ数
-    [SerializeField] float PhaseTime;                    //フェーズの制限時間
+    [SerializeField] GameObject[] Current_EnemyList;                    //現在の敵リスト
+    [SerializeField] GameObject[] EnemyObjects;                         //敵のPrefab   
+    [SerializeField] int EnemyCount;                                    //敵の数
+    [SerializeField] int CurrentWave;                                   //現在のフェーズ数
+    [SerializeField] float WaveTime;                                    //フェーズの制限時間
 
     void Start()
     {
-        CurrentPhase = 1;
-        PhaseTime = 180.0f;
+        CurrentWave = 1;
+        WaveTime = 180.0f;
     }
 
     void Update()
     {
+        EnemyCountSystem();
         ChangePhase();
-        PhaseSystem();
+        WaveSystem();
     }
 
-    void ChangePhase()                                  //フェーズ変更関数
+    void EnemyCountSystem()                                             //敵を数えるシステム
     {
-        if (PhaseTime >= 0.0f)                          //フェーズ制限時間以内なら
+        Current_EnemyList = GameObject.FindGameObjectsWithTag("Enemy");
+        EnemyCount = Current_EnemyList.Length;
+    }
+
+    void ChangePhase()                                                  //ウェーブ変更関数
+    {
+        if (WaveTime >= 0.0f)                                           //ウェーブ制限時間以内なら
         {
-            PhaseTime -= Time.deltaTime;
+            WaveTime -= Time.deltaTime;
         }
-        else                                            //フェーズ制限時間以外なら
+        else if(WaveTime <= 0.0f || EnemyCount == 0)                    //ウェーブ制限時間以外なら
         {
-            CurrentPhase++;
-            PhaseTime = 180.0f;
+            CurrentWave++;
+            WaveTime = 180.0f;
         }
     }
 
-    void PhaseSystem()                                  //フェーズシステム
+    void WaveSystem()                                                  //ウェーブシステム
     {
-        switch (CurrentPhase)
+        switch (CurrentWave)
         {
-            case 1:                                     //フェーズ1
+            case 1:                                                     //ウェーブ1
                 break;
-            case 2:                                     //フェーズ2
+            case 2:                                                     //ウェーブ2
                 break;
-            case 3:                                     //フェーズ3
+            case 3:                                                     //ウェーブ3
+                break;
+            default:                                                    //その他
                 break;
         }
     }
