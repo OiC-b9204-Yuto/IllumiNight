@@ -18,6 +18,8 @@ public class Minion : MonoBehaviour
 
     private float _timer = 0;
 
+    [SerializeField] ParticleSystem _smoke;
+
     void Update()
     {
         if (IsBattleRx.Value) 
@@ -28,6 +30,8 @@ public class Minion : MonoBehaviour
         {
             CheckCollider();
         }
+
+        
     }
 
     private void CheckCollider()
