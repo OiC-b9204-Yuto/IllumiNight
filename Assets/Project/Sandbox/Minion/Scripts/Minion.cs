@@ -30,8 +30,6 @@ public class Minion : MonoBehaviour
         {
             CheckCollider();
         }
-
-        
     }
 
     private void CheckCollider()
