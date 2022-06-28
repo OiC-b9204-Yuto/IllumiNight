@@ -2,27 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using System;
 
-public class PlayerState : MonoBehaviour
+public class PlayerState :MonoBehaviour , IHealth
 {
     [SerializeField] private int _initLifePoint;
 
     [SerializeField] private IntReactiveProperty _currentLifePoint;
-    /// <summary>
-    /// 現在のライフポイント
-    /// </summary>
-    public IReadOnlyReactiveProperty<int> CurrentLifePoint => _currentLifePoint;
 
-    [SerializeField] protected BoolReactiveProperty _isDead;
-    /// <summary>
-    /// 死亡用フラグ
-    /// </summary>  
-    public IReadOnlyReactiveProperty<bool> IsDead => _isDead;
+    public int Health => _currentLifePoint.Value;
+
+    public IObservable<int> HealthSubject => _currentLifePoint;
+
+    public int MaxHealth => _initLifePoint;
+
     void Awake()
     {
         _currentLifePoint = new IntReactiveProperty(_initLifePoint);
-        _isDead = new BoolReactiveProperty(false);
-        CurrentLifePoint.Where(_ => _ <= 0).Subscribe(_ => _isDead.Value = true);
     }
     public void TakeDamage(int damage)
     {
