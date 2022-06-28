@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44958645, g: 0.49966013, b: 0.5756651, a: 1}
+  m_IndirectSpecularColor: {r: 0.44958615, g: 0.4996596, b: 0.57566434, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11520,7 +11520,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.072072, y: 1}
+    m_SensorSize: {x: 1.7784201, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -18034,7 +18034,7 @@ MonoBehaviour:
   _isBattleRx:
     value: 0
   _collisionRadius: 0
-  _smoke: {fileID: 0}
+  _smoke: {fileID: 211877221}
 --- !u!65 &1938911937
 BoxCollider:
   m_ObjectHideFlags: 0

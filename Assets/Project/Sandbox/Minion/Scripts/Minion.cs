@@ -20,6 +20,11 @@ public class Minion : MonoBehaviour
 
     [SerializeField] ParticleSystem _smoke;
 
+    private void Awake()
+    {
+        _smoke.Stop();
+    }
+
     void Update()
     {
         if (IsBattleRx.Value) 
@@ -106,6 +111,7 @@ public class Minion : MonoBehaviour
         _timer = _tmpEnemyData.RequiredBattleTime;
         //戦闘開始/終了 -> EventでLightに送る
         _isBattleRx.Value = true;
+        _smoke.Play();
     }
 
     private void BattleEnd()
@@ -115,6 +121,7 @@ public class Minion : MonoBehaviour
         this.gameObject.GetComponent<Rigidbody>().isKinematic = false;
         //敵に戦闘終了を送る
         _tmpEnemyData.TakeDamage();
+        _smoke.Pause();
     }
     #if UNITY_EDITOR
     void OnDrawGizmosSelected()
