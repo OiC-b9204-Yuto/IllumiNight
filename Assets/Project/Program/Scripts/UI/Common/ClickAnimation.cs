@@ -5,11 +5,12 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonClickAnimation : MonoBehaviour
+public class ClickAnimation : MonoBehaviour
 {
-    [SerializeField] Button button;
+    [SerializeField] Button _button;
+    [SerializeField] RectTransform _animationTarget;
 
-    [SerializeField] AnimationCurve animationCurve;
+    [SerializeField] AnimationCurve _animationCurve;
 
     [SerializeField] float _animetionSpeed = 3  ;
 
@@ -20,7 +21,11 @@ public class ButtonClickAnimation : MonoBehaviour
 
     private void Start()
     {   
-        button.onClick.AddListener(ClickAnimetion);
+        _button.onClick.AddListener(ClickAnimetion);
+        if (_animationTarget == null)
+        {
+            _animationTarget = _button.GetComponent<RectTransform>();
+        }
     }
 
     public void ClickAnimetion()
@@ -38,10 +43,10 @@ public class ButtonClickAnimation : MonoBehaviour
         float _timer = 0;
         while (_timer < 1) {
             _timer += Time.deltaTime * _animetionSpeed;
-            button.transform.localScale = new Vector3(animationCurve.Evaluate(_timer), animationCurve.Evaluate(_timer), 1.0f);
+            _animationTarget.localScale = new Vector3(_animationCurve.Evaluate(_timer), _animationCurve.Evaluate(_timer), 1.0f);
             await UniTask.DelayFrame(1, cancellationToken: token);
         }
-        button.transform.localScale = new Vector3(1,1,1);
+        _button.transform.localScale = new Vector3(1,1,1);
         _isAnimetion = false;
     }
 }

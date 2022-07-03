@@ -12,7 +12,7 @@ public class ButtonSelectAnimetion : MonoBehaviour
 
     [SerializeField] Button button;
 
-    [SerializeField] float _animetionSpeed = 10;
+    [SerializeField] float _animetionSpeed = 8;
 
     private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
