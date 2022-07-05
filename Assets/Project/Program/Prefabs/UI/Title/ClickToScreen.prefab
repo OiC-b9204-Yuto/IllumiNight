@@ -322,7 +322,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: -0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -331,7 +331,7 @@ MonoBehaviour:
       outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 5
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -341,5 +341,5 @@ MonoBehaviour:
     m_PreInfinity: 0
     m_PostInfinity: 0
     m_RotationOrder: 4
-  _animetionSpeed: 1
+  _animetionSpeed: 0.8
   _isLoop: 1
