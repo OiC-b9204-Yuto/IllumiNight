@@ -28,8 +28,8 @@ public class Bullet : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            // var player = GetComponent<Player>(); 
-            // player.TakeDamage();
+            var player = other.GetComponent<PlayerState>(); 
+            player.TakeDamage(1);
             BulletManager.Instance.BulletPool.Release(this);
         }
         else if (other.gameObject.layer == LayerMask.NameToLayer("Stage"))

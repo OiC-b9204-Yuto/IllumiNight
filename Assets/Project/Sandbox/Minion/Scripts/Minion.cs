@@ -121,7 +121,7 @@ public class Minion : MonoBehaviour
         this.gameObject.GetComponent<Rigidbody>().isKinematic = false;
         //敵に戦闘終了を送る
         _tmpEnemyData.TakeDamage();
-        _smoke.Pause();
+        _smoke.Stop();
     }
     #if UNITY_EDITOR
     void OnDrawGizmosSelected()
