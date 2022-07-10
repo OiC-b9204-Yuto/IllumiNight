@@ -48,7 +48,11 @@ public class GhostEnemy : BaseEnemy
 
         // 死亡時
         IsDead.Subscribe(_ => {
-            if (_) { Debug.Log("死亡しました"); } 
+            if (_) 
+            { 
+                Debug.Log("死亡しました");
+                Destroy(this.gameObject, 1.0f);
+            } 
         });
     }
 

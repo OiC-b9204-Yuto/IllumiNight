@@ -25,7 +25,9 @@ public class WaveManager : MonoBehaviour
     [SerializeField] IntReactiveProperty _nextWaveCountdown = new IntReactiveProperty();
     public IReadOnlyReactiveProperty<int> NextWaveCountdown => _nextWaveCountdown;
 
-    bool isGameClear = false;
+    BoolReactiveProperty _isGameClear = new BoolReactiveProperty();
+
+    public IReadOnlyReactiveProperty<bool> IsGameClear => _isGameClear;
 
     void Start()
     {
@@ -59,7 +61,7 @@ public class WaveManager : MonoBehaviour
             if (CurrentWave < MaxWave) {
                 NextWave();
             } else {
-                isGameClear = true;
+                _isGameClear.Value = true;
             } 
         });
     }
