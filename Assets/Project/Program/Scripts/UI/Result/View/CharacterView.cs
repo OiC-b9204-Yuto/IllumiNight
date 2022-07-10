@@ -21,12 +21,12 @@ namespace IllumiNight.UI.Result
         public void SetRank(RankType rank)
         {
             _rank = rank;
+            _ImageList.ForEach(_ => _.SetActive(false));
+            _ImageList[(int)_rank].SetActive(true);
         }
 
         public UniTask AnimationStart()
         {
-            _ImageList.ForEach(_ => _.SetActive(false));
-            _ImageList[(int)_rank].SetActive(true);
             return UniTask.CompletedTask;
         }
 

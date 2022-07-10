@@ -6,7 +6,10 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     Rigidbody _rigidbody;
-    [SerializeField]float _speed;
+    [SerializeField] float _speed;
+    public bool _swing;
+
+    float timer;
     void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -22,6 +25,11 @@ public class Bullet : MonoBehaviour
     void FixedUpdate()
     {
         _rigidbody.velocity = _speed * Time.fixedDeltaTime * transform.forward;
+        if (_swing)
+        {
+            timer += Time.fixedDeltaTime;
+            _rigidbody.velocity += transform.rotation * new Vector3(Mathf.Sin(timer * 2) * _speed * Time.fixedDeltaTime, 0, 0);
+        }
     }
 
     void OnTriggerEnter(Collider other)

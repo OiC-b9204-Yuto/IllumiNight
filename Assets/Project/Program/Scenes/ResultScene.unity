@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: a123520a7933104448a02a7b116d9a8f, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -312,6 +312,7 @@ GameObject:
   - component: {fileID: 341084044}
   - component: {fileID: 341084046}
   - component: {fileID: 341084045}
+  - component: {fileID: 341084047}
   m_Layer: 5
   m_Name: Total
   m_TagString: Untagged
@@ -436,6 +437,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 341084043}
   m_CullTransparentMesh: 1
+--- !u!114 &341084047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 341084043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a5463f2568d179428264bcb8470f36a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 341084045}
+  _animationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _animetionSpeed: 0.8
 --- !u!1 &539830663
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,7 +560,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 621160280}
-  - component: {fileID: 621160281}
   m_Layer: 5
   m_Name: ResultView
   m_TagString: Untagged
@@ -552,29 +590,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &621160281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 621160279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47388149cd6ad24438a43576a4b7e5c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _characterImage:
-  - {fileID: 1931394642}
-  - {fileID: 2067656171}
-  - {fileID: 1363458012}
-  _defeatedEnemy: {fileID: 1897390989}
-  _receivedDamage: {fileID: 0}
-  _totalScore: {fileID: 341084045}
-  _rankImage:
-  - {fileID: 2090458952}
-  - {fileID: 313958593}
-  - {fileID: 539830663}
 --- !u!1 &666283060
 GameObject:
   m_ObjectHideFlags: 0
@@ -5562,6 +5577,7 @@ GameObject:
   - component: {fileID: 1199306690}
   - component: {fileID: 1199306692}
   - component: {fileID: 1199306691}
+  - component: {fileID: 1199306693}
   m_Layer: 5
   m_Name: ReceivedDamage
   m_TagString: Untagged
@@ -5686,6 +5702,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1199306689}
   m_CullTransparentMesh: 1
+--- !u!114 &1199306693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1199306689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 100fc98ca23339443b62ebc028930cd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 1199306691}
+  _animationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _animetionSpeed: 1
 --- !u!1 &1234233621
 GameObject:
   m_ObjectHideFlags: 0
@@ -5696,6 +5750,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1234233622}
   - component: {fileID: 1234233623}
+  - component: {fileID: 1234233625}
+  - component: {fileID: 1234233624}
   m_Layer: 5
   m_Name: RankView
   m_TagString: Untagged
@@ -5767,6 +5823,37 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _animetionSpeed: 0.5
+--- !u!225 &1234233624
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234233621}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
+--- !u!114 &1234233625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234233621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6e13a4373f98be49bd61465e8855b43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animetionSpeed: 1
+  _fadeInEndEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  _fadeOutEndEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1347606483
 GameObject:
   m_ObjectHideFlags: 0
@@ -6248,6 +6335,7 @@ GameObject:
   - component: {fileID: 1897390988}
   - component: {fileID: 1897390990}
   - component: {fileID: 1897390989}
+  - component: {fileID: 1897390991}
   m_Layer: 5
   m_Name: DefeatedEnemy
   m_TagString: Untagged
@@ -6372,6 +6460,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1897390987}
   m_CullTransparentMesh: 1
+--- !u!114 &1897390991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897390987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 336cff5e6da8c884586804ec353cacd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 1897390989}
+  _animationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _animetionSpeed: 1
 --- !u!1 &1931394642
 GameObject:
   m_ObjectHideFlags: 0
@@ -6631,6 +6757,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rankView: {fileID: 1234233621}
   _characterView: {fileID: 1799592463}
+  _defeatedEnemyView: {fileID: 1897390991}
+  _receivedDamageView: {fileID: 1199306693}
+  _totalScoreView: {fileID: 341084047}
 --- !u!4 &2040904336
 Transform:
   m_ObjectHideFlags: 0

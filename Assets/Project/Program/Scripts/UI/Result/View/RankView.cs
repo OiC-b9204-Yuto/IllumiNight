@@ -11,7 +11,7 @@ namespace IllumiNight.UI.Result
     public class RankView : MonoBehaviour, IAnimation
     {
         [SerializeField] List<GameObject> _ImageList;
-
+        FadeAnimation _fadeAnimation;
         [SerializeField] AnimationCurve _animationCurve;
 
         [SerializeField] float _animetionSpeed = 3;
@@ -26,13 +26,14 @@ namespace IllumiNight.UI.Result
         {
             IsAnimationEnd = false;
             _ImageList.ForEach(_ => _.SetActive(false));
+            _fadeAnimation = GetComponent<FadeAnimation>();
         }
 
         public void SetRank(RankType rank)
         {
             _rank = rank;
             _ImageList.ForEach(_ => _.SetActive(false));
-            _ImageList[(int)rank].SetActive(true);
+            _ImageList[(int)_rank].SetActive(true);
         }
 
         public async UniTask AnimationStart()
@@ -50,6 +51,7 @@ namespace IllumiNight.UI.Result
         async UniTask AnimetionTask(CancellationToken token)
         {
             float _timer = 0;
+            _fadeAnimation.FadeIn();
             while (_timer < 1)
             {
                 _timer += Time.deltaTime * _animetionSpeed;

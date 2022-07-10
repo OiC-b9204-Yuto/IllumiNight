@@ -92,6 +92,7 @@ public class BossEnemy : BaseEnemy
         {
             float shotRad = (shotDeg * i + initDeg) * Mathf.Deg2Rad;
             Bullet bullet = BulletManager.Instance.BulletPool.Get();
+            bullet._swing = _bulletPrefab._swing;
             Vector3 targetPlayerDir = new Vector3(Mathf.Sin(shotRad), 0, Mathf.Cos(shotRad));
             Vector3 bulletPos = shotPos + targetPlayerDir * _collisionRadius;
             bullet.Setup(bulletPos, targetPlayerDir, _bulletSpeed);

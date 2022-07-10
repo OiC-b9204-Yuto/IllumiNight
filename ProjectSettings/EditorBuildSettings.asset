@@ -6,7 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Project/Sandbox/Mock/Scenes/MockScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Project/Program/Scenes/TitleScene.unity
+    guid: 65d97decf2b19b148850958aa9877c83
+  - enabled: 1
+    path: Assets/Project/Program/Scenes/GameScene.unity
+    guid: 3bd60184d9559db4a874387f5ac408ac
+  - enabled: 1
+    path: Assets/Project/Program/Scenes/ResultScene.unity
+    guid: 2dd206aa7b4eced48bda3bb7a8a76721
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 83cdf61cf459fa4458e94fcd7c380cb7, type: 2}

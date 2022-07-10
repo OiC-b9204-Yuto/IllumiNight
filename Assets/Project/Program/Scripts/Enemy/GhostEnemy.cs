@@ -117,6 +117,7 @@ public class GhostEnemy : BaseEnemy
     {
         _isShotReady = false;
         Bullet bullet = BulletManager.Instance.BulletPool.Get();
+        bullet._swing = _bulletPrefab._swing;
         Vector3 bulletPos = transform.position + transform.forward * _collisionRadius;
         Vector3 targetPlayerDir = _player.position - bulletPos;
         targetPlayerDir.y = 0;
