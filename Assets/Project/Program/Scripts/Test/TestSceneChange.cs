@@ -16,6 +16,14 @@ public class TestSceneChange : SingletonMonoBehaviour<TestSceneChange>
     /// </summary>
     public bool IsLoadScene { get { return isLoadScene; } }
 
+    private AsyncOperation _nextScene;
+    
+    bool _isLoadingComplete = false;
+    public bool IsLoadingComplete => _isLoadingComplete;
+
+    bool _isNextScene = false;
+    public bool IsNextScene => _isNextScene;
+
     protected override void Awake()
     {
         base.Awake();
@@ -58,7 +66,7 @@ public class TestSceneChange : SingletonMonoBehaviour<TestSceneChange>
     /// シーンを読み込み遷移する関数
     /// </summary>
     /// <param name="name">シーン名</param>
-    public void LoadSceneStart(string name)
+    public void LoadSceneStart(string name, bool loadingScene = false)
     {
         if (isLoadScene)
         {
@@ -67,14 +75,23 @@ public class TestSceneChange : SingletonMonoBehaviour<TestSceneChange>
         isLoadScene = true;
         EventSystem eventSystem = (EventSystem)FindObjectOfType(typeof(EventSystem));
         if (eventSystem) eventSystem.enabled = false;
-        StartCoroutine(LoadScene(name));
+        StartCoroutine(LoadScene(name, loadingScene));
+    }
+
+    public void NextSceneStart()
+    {
+        if (!_isNextScene && _isLoadingComplete)
+        {
+            _isNextScene = true;
+            StartCoroutine(NextScene());
+        }
     }
 
     /// <summary>
     /// シーンを読み込み遷移する関数
     /// </summary>
     /// <param name="index">シーン番号</param>
-    public void LoadSceneStart(int index)
+    public void LoadSceneStart(int index, bool loadingScene = false)
     {
         if (isLoadScene)
         {
@@ -83,25 +100,67 @@ public class TestSceneChange : SingletonMonoBehaviour<TestSceneChange>
         isLoadScene = true;
         EventSystem eventSystem = (EventSystem)FindObjectOfType(typeof(EventSystem));
         if (eventSystem) eventSystem.enabled = false;
-        StartCoroutine(LoadScene(index));
+        StartCoroutine(LoadScene(index, loadingScene));
     }
 
-    private IEnumerator LoadScene(string name)
+    private IEnumerator LoadScene(string name, bool loadingScene)
     {
-        var scene = SceneManager.LoadSceneAsync(name);
-        scene.allowSceneActivation = false;
-        yield return FadeOut();
-        scene.allowSceneActivation = true;
-        yield return FadeIn();
+        if (loadingScene)
+        {
+            yield return LoadScene("LoadingScene", false);
+
+        }
+        isLoadScene = true;
+        _nextScene = SceneManager.LoadSceneAsync(name);
+        _nextScene.allowSceneActivation = false;
+        if (!loadingScene)
+        {
+            yield return FadeOut();
+        }
+        while (_nextScene.progress < 0.9f)
+        {
+            yield return null;
+        }
+        _isLoadingComplete = true;
+
+        if (!loadingScene)
+        {
+            yield return NextScene();
+        }
     }
 
-    private IEnumerator LoadScene(int index)
+    private IEnumerator LoadScene(int index, bool loadingScene)
     {
-        var scene = SceneManager.LoadSceneAsync(name);
-        scene.allowSceneActivation = false;
+        if (loadingScene)
+        {
+            yield return LoadScene("LoadingScene", false);
+        }
+        isLoadScene = true;
+        _nextScene = SceneManager.LoadSceneAsync(name);
+        _nextScene.allowSceneActivation = false;
+        if (!loadingScene)
+        {
+            yield return FadeOut();
+        }
+        while (_nextScene.progress < 0.9f)
+        {
+            yield return null;
+        }
+        _isLoadingComplete = true;
+        if (!loadingScene)
+        {
+            yield return new WaitForSeconds(0.2f);
+            yield return NextScene();
+        }
+    }
+
+    private IEnumerator NextScene()
+    {
         yield return FadeOut();
-        scene.allowSceneActivation = true;
+        _nextScene.allowSceneActivation = true;
+        _isLoadingComplete = false;
         yield return FadeIn();
+        _isNextScene = false;
     }
 
     private IEnumerator FadeIn()
