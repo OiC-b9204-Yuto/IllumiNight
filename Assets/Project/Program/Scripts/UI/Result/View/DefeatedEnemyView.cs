@@ -30,7 +30,7 @@ public class DefeatedEnemyView : MonoBehaviour, IAnimation
     public void SetValue(int num)
     {
         _score = num;
-        _text.text = _score.ToString();
+        _text.text = "+"+_score.ToString();
     }
 
     public async UniTask AnimationStart()

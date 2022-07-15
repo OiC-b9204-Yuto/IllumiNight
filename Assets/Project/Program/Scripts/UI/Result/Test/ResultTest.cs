@@ -13,31 +13,36 @@ public class ResultTest : MonoBehaviour
     [SerializeField] DefeatedEnemyView _defeatedEnemyView;
     [SerializeField] ReceivedDamageView _receivedDamageView;
     [SerializeField] TotalScoreView _totalScoreView;
-    
+
+    [SerializeField] ScoreData scoreData;
+
+    bool _isEndAnimetion = false;
 
     async void Start()
     {
-        _rankView.GetComponent<RankView>().SetRank(RankType.A);
+        int damage = scoreData.ReceivedDamage;
+        RankType rankType = damage <= 3 ? RankType.A : (damage <= 6 ? RankType.B : RankType.C); 
+        _rankView.GetComponent<RankView>().SetRank(rankType);
         _characterView.GetComponent<CharacterView>().SetRank(RankType.C);
 
-        _defeatedEnemyView.SetValue(7);
+        _defeatedEnemyView.SetValue(scoreData.DefeatedEnemy);
         await _defeatedEnemyView.AnimationStart();
-        _receivedDamageView.SetValue(-3);
+        _receivedDamageView.SetValue(damage);
         await _receivedDamageView.AnimationStart();
-        _totalScoreView.SetValue(7 * 600 - 3 * 150);
+        _totalScoreView.SetValue(scoreData.GetScore());
         await _totalScoreView.AnimationStart();
 
         await _rankView.GetComponent<IAnimation>().AnimationStart();
-        _characterView.GetComponent<CharacterView>().SetRank(RankType.A);
+        _characterView.GetComponent<CharacterView>().SetRank(rankType);
 
-
+        _isEndAnimetion = true;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (_isEndAnimetion && Input.GetMouseButtonDown(0))
         {
-            _rankView.GetComponent<IAnimation>().AnimationSkip();
+            TestSceneChange.Instance.LoadSceneStart("TitleScene", true);
         }
     }
 }

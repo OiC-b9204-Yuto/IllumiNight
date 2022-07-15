@@ -25,14 +25,27 @@ public class WaveManager : MonoBehaviour
     [SerializeField] IntReactiveProperty _nextWaveCountdown = new IntReactiveProperty();
     public IReadOnlyReactiveProperty<int> NextWaveCountdown => _nextWaveCountdown;
 
-    BoolReactiveProperty _isGameClear = new BoolReactiveProperty();
+    [SerializeField] BoolReactiveProperty _isGameClear = new BoolReactiveProperty();
 
     public IReadOnlyReactiveProperty<bool> IsGameClear => _isGameClear;
 
+    [SerializeField] ScoreData _scoreData;
+
+    PlayerState _playerState;
+
     void Start()
     {
+        _playerState = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerState>();
         NextWaveCountdown.SkipLatestValueOnSubscribe().Subscribe(_ => Debug.Log(_));
         NextWave();
+        IsGameClear.SkipLatestValueOnSubscribe().Subscribe(async _ =>
+        {
+            //åÇîjêîï€ë∂(åªç›å≈íË7ÇÃÇΩÇﬂíËêîÇ≈)
+            _scoreData.DefeatedEnemy = 7;
+            _scoreData.ReceivedDamage = _playerState.MaxHealth - _playerState.Health;
+            await UniTask.Delay(2000);
+            TestSceneChange.Instance.LoadSceneStart("ResultScene");
+        });
     }
 
     async void NextWave()

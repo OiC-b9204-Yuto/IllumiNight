@@ -110,13 +110,13 @@ public class TestSceneChange : SingletonMonoBehaviour<TestSceneChange>
             yield return LoadScene("LoadingScene", false);
 
         }
-        isLoadScene = true;
-        _nextScene = SceneManager.LoadSceneAsync(name);
-        _nextScene.allowSceneActivation = false;
         if (!loadingScene)
         {
             yield return FadeOut();
         }
+        isLoadScene = true;
+        _nextScene = SceneManager.LoadSceneAsync(name);
+        _nextScene.allowSceneActivation = false;
         while (_nextScene.progress < 0.9f)
         {
             yield return null;
@@ -135,13 +135,13 @@ public class TestSceneChange : SingletonMonoBehaviour<TestSceneChange>
         {
             yield return LoadScene("LoadingScene", false);
         }
-        isLoadScene = true;
-        _nextScene = SceneManager.LoadSceneAsync(name);
-        _nextScene.allowSceneActivation = false;
         if (!loadingScene)
         {
             yield return FadeOut();
         }
+        isLoadScene = true;
+        _nextScene = SceneManager.LoadSceneAsync(name);
+        _nextScene.allowSceneActivation = false;
         while (_nextScene.progress < 0.9f)
         {
             yield return null;

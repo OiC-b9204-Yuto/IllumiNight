@@ -30,7 +30,14 @@ public class ReceivedDamageView : MonoBehaviour, IAnimation
     public void SetValue(int num)
     {
         _score = num;
-        _text.text = _score.ToString();
+        if (_score > 0)
+        {
+            _text.text = "-"+_score.ToString();
+        }
+        else
+        {
+            _text.text = _score.ToString();
+        }
     }
 
     public async UniTask AnimationStart()

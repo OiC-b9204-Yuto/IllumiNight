@@ -6760,6 +6760,7 @@ MonoBehaviour:
   _defeatedEnemyView: {fileID: 1897390991}
   _receivedDamageView: {fileID: 1199306693}
   _totalScoreView: {fileID: 341084047}
+  scoreData: {fileID: 11400000, guid: 363d779489d1a0e42aa7f3cdbc95f313, type: 2}
 --- !u!4 &2040904336
 Transform:
   m_ObjectHideFlags: 0
