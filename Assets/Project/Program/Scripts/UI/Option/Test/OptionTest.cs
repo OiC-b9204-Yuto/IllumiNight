@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class OptionTest : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] List<VolumeSlider> _volumeSliderList = new List<VolumeSlider>();
+    public void AudioReset()
     {
-        
+        AudioManager.Instance.Load();
+        foreach (var item in _volumeSliderList)
+        {
+            item.SliderReset();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AudioSave()
     {
-        
+        AudioManager.Instance.Save();
     }
 }
