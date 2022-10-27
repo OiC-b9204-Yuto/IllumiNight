@@ -10,6 +10,9 @@ public class PlayerState :MonoBehaviour , IHealth
 
     [SerializeField] private IntReactiveProperty _currentLifePoint;
 
+    [SerializeField] private float _invincibleTime;
+    private float _currentInvincibleTime;
+
     public int Health => _currentLifePoint.Value;
 
     public IObservable<int> HealthSubject => _currentLifePoint;
@@ -19,9 +22,19 @@ public class PlayerState :MonoBehaviour , IHealth
     void Awake()
     {
         _currentLifePoint = new IntReactiveProperty(_initLifePoint);
+        _currentInvincibleTime = 0;
+    }
+
+    void Update()
+    {
+        if(_currentInvincibleTime > 0) { _currentInvincibleTime -= Time.deltaTime; }
     }
     public void TakeDamage(int damage)
     {
-        _currentLifePoint.Value -= damage;
+        if(_currentInvincibleTime <= 0)
+        {
+            _currentLifePoint.Value -= damage;
+            _currentInvincibleTime = _invincibleTime;
+        }
     }
 }
