@@ -263,7 +263,7 @@ MonoBehaviour:
   _selectedIcon: {fileID: 7250597326714338673}
   _underline: {fileID: 7250597325350114763}
   button: {fileID: 7250597325168782911}
-  _animetionSpeed: 5
+  _animetionSpeed: 3
 --- !u!114 &7250597325168782906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1061,7 +1061,7 @@ MonoBehaviour:
   _selectedIcon: {fileID: 7250597326693880696}
   _underline: {fileID: 7250597325160296703}
   button: {fileID: 7250597326758300226}
-  _animetionSpeed: 5
+  _animetionSpeed: 3
 --- !u!114 &7250597326758300233
 MonoBehaviour:
   m_ObjectHideFlags: 0
