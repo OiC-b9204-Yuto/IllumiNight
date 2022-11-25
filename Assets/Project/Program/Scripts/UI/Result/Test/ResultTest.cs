@@ -20,6 +20,8 @@ public class ResultTest : MonoBehaviour
 
     async void Start()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         int damage = scoreData.ReceivedDamage;
         RankType rankType = damage <= 3 ? RankType.A : (damage <= 6 ? RankType.B : RankType.C); 
         _rankView.GetComponent<RankView>().SetRank(rankType);

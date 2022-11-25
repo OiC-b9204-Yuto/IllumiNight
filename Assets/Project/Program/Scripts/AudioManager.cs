@@ -33,6 +33,11 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     {
         Load(); 
     }
+    protected override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(this.gameObject);
+    }
 
     /// <summary>
     /// 現在の音量のデータをファイルに保存する関数
