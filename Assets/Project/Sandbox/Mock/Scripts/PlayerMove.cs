@@ -18,6 +18,11 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PauseMenu.IsPause)
+        {
+            return;
+        }
+
         // ˆÚ“®
         float inputV = Input.GetAxisRaw("Vertical");
         float inputH = Input.GetAxisRaw("Horizontal");
@@ -34,12 +39,6 @@ public class PlayerMove : MonoBehaviour
         //forward.Normalize();
 
         //transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, (Mathf.Atan2(-forward.y, forward.x)+Mathf.PI * 0.5f) * Mathf.Rad2Deg , transform.localEulerAngles.z);
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Cursor.visible = true;
-        }
-
     }
 
     void FixedUpdate()
