@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 
 namespace IllumiNight.UI.Result
 {
@@ -25,7 +26,7 @@ namespace IllumiNight.UI.Result
             _ImageList[(int)_rank].SetActive(true);
         }
 
-        public UniTask AnimationStart()
+        public UniTask AnimationStart(CancellationToken token = default(CancellationToken))
         {
             return UniTask.CompletedTask;
         }

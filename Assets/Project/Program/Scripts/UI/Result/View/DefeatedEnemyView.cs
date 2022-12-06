@@ -33,7 +33,7 @@ public class DefeatedEnemyView : MonoBehaviour, IAnimation
         _text.text = "+"+_score.ToString();
     }
 
-    public async UniTask AnimationStart()
+    public async UniTask AnimationStart(CancellationToken token = default(CancellationToken))
     {
         _cancellationTokenSource = new CancellationTokenSource();
         await AnimetionTask(_cancellationTokenSource.Token);

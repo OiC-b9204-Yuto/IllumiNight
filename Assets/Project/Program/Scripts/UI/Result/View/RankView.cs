@@ -36,7 +36,7 @@ namespace IllumiNight.UI.Result
             _ImageList[(int)_rank].SetActive(true);
         }
 
-        public async UniTask AnimationStart()
+        public async UniTask AnimationStart(CancellationToken token = default(CancellationToken))
         {
             _cancellationTokenSource = new CancellationTokenSource();
             await AnimetionTask(_cancellationTokenSource.Token);

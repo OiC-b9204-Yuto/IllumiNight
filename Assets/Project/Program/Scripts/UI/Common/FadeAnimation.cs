@@ -65,14 +65,20 @@ public class FadeAnimation : MonoBehaviour , IAnimation
         _fadeOutEndEvent?.Invoke();
     }
 
-    public async UniTask AnimationStart()
+    public async UniTask AnimationStart(CancellationToken token)
     {
-        if (_canvasGroup.alpha == 1) {
-            _cancellationTokenSource = new CancellationTokenSource();
-            await FadeOutAnimationTask(_cancellationTokenSource.Token);
-        } else if (_canvasGroup.alpha == 0) {
-            _cancellationTokenSource = new CancellationTokenSource();
-            await FadeInAnimationTask(_cancellationTokenSource.Token);
+        if (_canvasGroup)
+        {
+            if (_canvasGroup.alpha == 1)
+            {
+                _cancellationTokenSource = new CancellationTokenSource();
+                await FadeOutAnimationTask(_cancellationTokenSource.Token);
+            }
+            else if (_canvasGroup.alpha == 0)
+            {
+                _cancellationTokenSource = new CancellationTokenSource();
+                await FadeInAnimationTask(_cancellationTokenSource.Token);
+            }
         }
     }
 
@@ -91,5 +97,11 @@ public class FadeAnimation : MonoBehaviour , IAnimation
             _canvasGroup.blocksRaycasts = false;
             _fadeOutEndEvent?.Invoke();
         }
+    }
+
+    void OnDestroy()
+    {
+        _cancellationTokenSource?.Cancel();
+        _cancellationTokenSource?.Dispose();
     }
 }

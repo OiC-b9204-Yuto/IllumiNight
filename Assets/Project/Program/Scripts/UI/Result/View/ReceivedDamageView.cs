@@ -40,7 +40,7 @@ public class ReceivedDamageView : MonoBehaviour, IAnimation
         }
     }
 
-    public async UniTask AnimationStart()
+    public async UniTask AnimationStart(CancellationToken token = default(CancellationToken))
     {
         _cancellationTokenSource = new CancellationTokenSource();
         await AnimetionTask(_cancellationTokenSource.Token);
