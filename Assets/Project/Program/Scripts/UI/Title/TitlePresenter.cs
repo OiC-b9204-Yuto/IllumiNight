@@ -11,27 +11,29 @@ public class TitlePresenter : MonoBehaviour
     [SerializeField] GameObject _optionView;
     [SerializeField] Button _startButton;
     [SerializeField] Button _optionButton;
+    [SerializeField] Button _endButton;
 
     async void Start()
     {
         _clickToScreenView.GetComponent<Button>().onClick.AddListener(
-            async () => 
+            async () =>
             {
                 await _clickToScreenView.GetComponent<IAnimation>().AnimationStart();
                 await _titleMenuView.GetComponent<IAnimation>().AnimationStart();
             });
         _startButton.onClick.AddListener(
-            async () => 
+            async () =>
             {
                 await _titleMenuView.GetComponent<IAnimation>().AnimationStart();
                 TestSceneChange.Instance.LoadSceneStart("GameScene", true);
             });
         _optionButton.onClick.AddListener(
-            async () => 
+            async () =>
             {
                 await _titleMenuView.GetComponent<IAnimation>().AnimationStart();
                 _optionView.GetComponent<OptionTest>().AudioReset();
                 await _optionView.GetComponent<IAnimation>().AnimationStart();
             });
+        _endButton.onClick.AddListener(() => TestSceneChange.Instance.GameQuitStart());
     }
 }
